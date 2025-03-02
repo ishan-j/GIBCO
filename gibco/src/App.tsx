@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Editor from './components/Editor';
+import Home from './components/Home';
 
 
 function App() {
@@ -11,8 +12,8 @@ function App() {
       <Routes>
         
         
-        {/* Editor Route */}
-        <Route path="/" element={<Editor />} />
+       <Route path='/' element={<Home />}/> 
+        <Route path="/editor" element={<Editor />} />
       </Routes>
     </div>
   </Router>
