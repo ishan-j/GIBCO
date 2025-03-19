@@ -3,6 +3,7 @@ import Editor from './components/Editor';
 import Home from './components/Home';
 import PageSelection from './components/PageSelection';
 import PageCreation from './components/PageCreation';
+import DynamicPage from './components/dynamicComponents/DynamicPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/editor" element={<Editor />} />
         <Route path='/page' element={<PageSelection />}/> 
         <Route path='/createpage' element={<PageCreation />}/> 
+        <Route path='/dynamicPage/:pageid' element={<DynamicPage/>}/> 
       </Routes>
     </div>
   </Router>

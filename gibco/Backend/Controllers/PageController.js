@@ -37,7 +37,7 @@ exports.getPageById = async (req, res) => {
 exports.updatePage = async (req, res) => {
   try {
     const updatedPage = await Page.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+     
     });
     if (!updatedPage) return res.status(404).json({ message: "Page not found" });
     res.status(200).json(updatedPage);
