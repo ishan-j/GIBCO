@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Editor from './components/Editor';
+import Home from './components/Home';
+import PageSelection from './components/PageSelection';
+import PageCreation from './components/PageCreation';
 
 
 function App() {
@@ -11,8 +14,10 @@ function App() {
       <Routes>
         
         
-        {/* Editor Route */}
-        <Route path="/" element={<Editor />} />
+       <Route path='/' element={<Home />}/> 
+        <Route path="/editor" element={<Editor />} />
+        <Route path='/page' element={<PageSelection />}/> 
+        <Route path='/createpage' element={<PageCreation />}/> 
       </Routes>
     </div>
   </Router>

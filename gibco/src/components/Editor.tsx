@@ -1,78 +1,69 @@
-import React from 'react';
+import { JSX, useState } from "react";
 
-// Define types for the section data
-type Section =
-  | { type: 'text'; content: string }
-  | { type: 'image'; src: string; alt: string }
-  | { type: 'button'; label: string; onClick: () => void };
+interface Element {
+  control: string;
+  type: string;
+}
 
-// Dynamic components (e.g., section types)
-const TextSection: React.FC<{ content: string }> = ({ content }) => (
-  <div className="p-4 bg-gray-100 rounded-md shadow-md text-lg">{content}</div>
-);
+function Editor() {
+  const [page, setPage] = useState<Element[]>([]);
 
-const ImageSection: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
-  <div className="p-4 flex justify-center">
-    <img src={src} alt={alt} className="rounded-md shadow-md" />
-  </div>
-);
-
-const ButtonSection: React.FC<{ label: string; onClick: () => void }> = ({
-  label,
-  onClick,
-}) => (
-  <div className="p-4 flex justify-center">
-    <button
-      onClick={onClick}
-      className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-400"
-    >
-      {label}
-    </button>
-  </div>
-);
-
-const DynamicPage: React.FC = () => {
-  // Define an array of sections with dynamic content and type
-  const sections: Section[] = [
-    {
-      type: 'text',
-      content: 'This is a dynamic text section with Tailwind styling!',
-    },
-    {
-      type: 'image',
-      src: 'https://via.placeholder.com/150',
-      alt: 'Placeholder Image',
-    },
-    {
-      type: 'button',
-      label: 'Click Me!',
-      onClick: () => alert('Button clicked!'),
-    },
-    {
-      type: 'text',
-      content: 'Another dynamic text section with Tailwind!',
-    },
-  ];
-
-  // Function to render each section based on its type
-  const renderSection = (section: Section, index: number) => {
-    switch (section.type) {
-      case 'text':
-        return <TextSection key={index} content={section.content} />;
-      case 'image':
-        return <ImageSection key={index} src={section.src} alt={section.alt} />;
-      case 'button':
-        return <ButtonSection key={index} label={section.label} onClick={section.onClick} />;
-      default:
-        return null;
-    }
+  const handleDynamicInput = (controlType: string) => {
+    const newElement: Element = {
+      control: controlType,
+      type: "text",
+    };
+    setPage([...page, newElement]);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 space-y-6">
-      {sections.map((section, index) => renderSection(section, index))}
+    <>
+    <div className="flex space-x-8 p-6 bg-gray-900 min-h-screen">
+      <div className="flex-1">
+        <h1 className="text-white text-2xl font-semibold mb-6">Editor</h1>
+        <button
+          onClick={() => handleDynamicInput("button")}
+          className="mt-4 py-2 px-6 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+        >
+          Add Button
+        </button>
+        <button
+          onClick={() => handleDynamicInput("input")}
+          className="mt-4 py-2 px-6 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+        >
+          Add Input
+        </button>
+      </div>
+      <div className="flex-1">
+        <h1 className="text-white text-2xl font-semibold mb-6">Viewer</h1>
+        <div className="mt-4 space-y-4">
+          {page.map((element, index) => {
+            let control: JSX.Element | null = null;
+            switch (element.control) {
+              case "button":
+                control = (
+                  <button key={index} className="py-2 px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-400 transition">
+                    Click me
+                  </button>
+                );
+                break;
+              case "input":
+                control = (
+                  <input
+                    key={index}
+                    type={element.type}
+                    className="py-2 px-4 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                );
+                break;
+            }
+            return <div key={index}>{control}</div>;
+          })}
+        </div>
+      </div>
     </div>
+  </>
   );
-};
+}
 
-export default DynamicPage;
+export default Editor;
