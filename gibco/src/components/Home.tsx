@@ -18,7 +18,7 @@ const navigate = useNavigate();
     return () => clearInterval(interval);
   }, []);
   const handleRedirect = () => {
-    navigate('/editor');
+    navigate('/page');
   }
   return (
     <div className="bg-black text-white min-h-screen flex flex-col ">
